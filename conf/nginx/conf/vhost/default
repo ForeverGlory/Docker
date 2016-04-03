@@ -1,0 +1,33 @@
+server {
+    listen 80;
+    server_name localhost;
+    root /var/www/web;
+    index index.html index.htm index.php;
+
+    error_page 403 /error;
+    location / {
+        index  index.html index.htm index.php;
+        try_files $uri $uri/index.html $uri/index.htm /index.php$is_args$args;
+    }
+
+    location ~*\.php(/|$) {
+        fastcgi_pass unix:/var/run/php7-fpm.sock;
+        fastcgi_index index.php;
+        fastcgi_split_path_info ^(.+\.php)(/.*)$;
+        include fastcgi_params;
+        fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+        fastcgi_param HTTPS off;
+    }
+
+    location ~*\.(css|js|jpg|jpeg|gif|png|ico|swf)$  {
+        expires 30d;
+    }
+    location ~*\.(ttf|svg|woff|otf|eot)$  {
+        expires 30d;
+        add_header Access-Control-Allow-Origin *;
+    }
+
+    location ~ /\.ht {
+        deny all;
+    }
+}
