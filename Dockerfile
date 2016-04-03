@@ -66,23 +66,24 @@ RUN echo 'root:docker' | chpasswd
 
 # 配置 Mysql、Nginx、PHP
 
-ADD conf/nginx/conf/*   /usr/local/nginx/conf/
+ADD conf/nginx/conf/nginx.conf  /usr/local/nginx/conf/
+ADD conf/nginx/conf/vhost       /usr/local/nginx/conf/vhost
 
-ADD conf/php/etc/*              /usr/local/php/etc/
+ADD conf/php/etc/php.ini        /usr/local/php/etc/
+ADD conf/php/etc/php-fpm.conf   /usr/local/php/etc/
 ADD conf/php/etc/conf.d/*       /usr/local/php/etc/conf.d/
 ADD conf/php/etc/php-fpm.d/*    /usr/local/php/etc/php-fpm.d/
 RUN ln -s /usr/local/php/bin/php /usr/local/bin/php
 
+RUN mkdir /var/www/web -p && echo '<h1>If you see me. you need run `docker run [OPTIONS] -v youdir:/var/www IMAGE`</h1>' > /var/www/web/index.html
 # 开放端口
 EXPOSE 22
 EXPOSE 80
 EXPOSE 3306
 
 # 挂载文件夹
-# VOLUME /var/www
-RUN mkdir /data -p
-RUN chown -R www-data:www-data /data
-VOLUME /data
+VOLUME /var/www
+RUN chown -R www-data:www-data /var/www
 
 WORKDIR /root
 # 后台运行
