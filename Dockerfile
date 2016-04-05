@@ -65,15 +65,16 @@ RUN sed -i 's/PermitRootLogin without-password/PermitRootLogin yes/' /etc/ssh/ss
 RUN echo 'root:docker' | chpasswd
 
 # 配置 Mysql、Nginx、PHP
-
+ADD service/nginx               /etc/init.d/nginx
 ADD conf/nginx/conf/nginx.conf  /usr/local/nginx/conf/
 ADD conf/nginx/conf/vhost       /usr/local/nginx/conf/vhost
 
+ADD service/php-fpm             /etc/init.d/php-fpm
 ADD conf/php/etc/php.ini        /usr/local/php/etc/
 ADD conf/php/etc/php-fpm.conf   /usr/local/php/etc/
 ADD conf/php/etc/conf.d/*       /usr/local/php/etc/conf.d/
 ADD conf/php/etc/php-fpm.d/*    /usr/local/php/etc/php-fpm.d/
-RUN ln -s /usr/local/php/bin/php /usr/local/bin/php
+RUN chmod +x /etc/init.d/nginx && chmod +x /etc/init.d/php-fpm && ln -s /usr/local/php/bin/php /usr/local/bin/php
 
 RUN mkdir /var/www/web -p && echo '<h1>If you see me. you need run `docker run [OPTIONS] -v youdir:/var/www IMAGE`</h1>' > /var/www/web/index.html
 # 开放端口
