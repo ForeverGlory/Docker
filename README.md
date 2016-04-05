@@ -22,4 +22,4 @@ run
 ---
 docker run -d -p 2202:22 -p 80:80 foreverglory/docker
 
-docker run -d -p 2202:22 -p 80:80 -v $pwd:/data/www foreverglory/docker
+docker run -d -p 2202:22 -p 80:80 -v $pwd:/var/www foreverglory/docker
