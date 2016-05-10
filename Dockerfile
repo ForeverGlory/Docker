@@ -48,10 +48,10 @@ RUN make && make install
 RUN apt-get install -y libxml2-dev libcurl4-openssl-dev libjpeg-dev libpng12-dev libfreetype6-dev libicu-dev libmcrypt-dev
 
 WORKDIR /usr/local/src
-RUN wget http://mirrors.sohu.com/php/php-7.0.5.tar.gz
-RUN tar -zxf php-7.0.5.tar.gz
+RUN wget http://mirrors.sohu.com/php/php-7.0.6.tar.gz
+RUN tar -zxf php-7.0.6.tar.gz
 
-WORKDIR php-7.0.5
+WORKDIR php-7.0.6
 RUN ./configure --prefix=/usr/local/php --with-config-file-path=/usr/local/php/etc --with-config-file-scan-dir=/usr/local/php/etc/conf.d --with-mysql-sock --with-mysqli --with-pdo-mysql --enable-fpm --with-fpm-user=www-data --with-fpm-group=www-data --enable-mbstring --enable-ftp --enable-sockets --enable-intl --enable-opcache --with-zlib --with-gd --with-jpeg-dir --with-png-dir --with-freetype-dir --enable-exif --with-curl --with-openssl --with-mcrypt
 RUN make && make install
 
