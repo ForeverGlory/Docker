@@ -41,17 +41,17 @@ RUN wget http://mirrors.sohu.com/nginx/nginx-1.9.9.tar.gz
 RUN tar -zxf nginx-1.9.9.tar.gz
 
 WORKDIR nginx-1.9.9
-RUN ./configure --prefix=/usr/local/nginx --user=www-data --group=www-data --with-pcre --with-http_stub_status_module --with-http_gzip_static_module
+RUN ./configure --prefix=/usr/local/nginx --user=www-data --group=www-data --with-pcre --with-http_stub_status_module --with-http_gzip_static_module --with-http_ssl_module
 RUN make && make install
 
 # 编译 php
 RUN apt-get install -y libxml2-dev libcurl4-openssl-dev libjpeg-dev libpng12-dev libfreetype6-dev libicu-dev libmcrypt-dev
 
 WORKDIR /usr/local/src
-RUN wget http://mirrors.sohu.com/php/php-7.0.6.tar.gz
-RUN tar -zxf php-7.0.6.tar.gz
+RUN wget http://mirrors.sohu.com/php/php-7.0.7.tar.gz
+RUN tar -zxf php-7.0.7.tar.gz
 
-WORKDIR php-7.0.6
+WORKDIR php-7.0.7
 RUN ./configure --prefix=/usr/local/php --with-config-file-path=/usr/local/php/etc --with-config-file-scan-dir=/usr/local/php/etc/conf.d --with-mysql-sock --with-mysqli --with-pdo-mysql --enable-fpm --with-fpm-user=www-data --with-fpm-group=www-data --enable-mbstring --enable-ftp --enable-sockets --enable-intl --enable-opcache --with-zlib --with-gd --with-jpeg-dir --with-png-dir --with-freetype-dir --enable-exif --with-curl --with-openssl --with-mcrypt
 RUN make && make install
 
