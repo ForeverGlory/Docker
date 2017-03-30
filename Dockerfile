@@ -48,7 +48,7 @@ RUN make && make install
 RUN apt-get install -y libxml2-dev libcurl4-openssl-dev libjpeg-dev libpng12-dev libfreetype6-dev libicu-dev libmcrypt-dev
 
 WORKDIR /usr/local/src
-RUN wget http://mirrors.sohu.com/php/php-7.0.7.tar.gz
+RUN wget http://mirrors.sohu.com/php/php-7.0.17.tar.gz
 RUN tar -zxf php-7.0.7.tar.gz
 
 WORKDIR php-7.0.7
